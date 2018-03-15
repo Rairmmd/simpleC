@@ -1,17 +1,29 @@
 package com.luoye.simpleC.view;
 
-import android.content.*;
-import android.graphics.*;
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.Message;
-import android.util.*;
-import android.view.*;
-import android.widget.*;
+import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
+import android.view.KeyEvent;
+import android.widget.Toast;
 
-import com.luoye.simpleC.util.Setting;
-import com.myopicmobile.textwarrior.android.*;
-import com.myopicmobile.textwarrior.common.*;
-import java.io.*;
+import com.myopicmobile.textwarrior.android.FreeScrollingTextField;
+import com.myopicmobile.textwarrior.android.YoyoNavigationMethod;
+import com.myopicmobile.textwarrior.common.ColorScheme;
+import com.myopicmobile.textwarrior.common.ColorSchemeDark;
+import com.myopicmobile.textwarrior.common.ColorSchemeLight;
+import com.myopicmobile.textwarrior.common.Document;
+import com.myopicmobile.textwarrior.common.DocumentProvider;
+import com.myopicmobile.textwarrior.common.LanguageCpp;
+import com.myopicmobile.textwarrior.common.Lexer;
+import com.myopicmobile.textwarrior.common.ReadThread;
+import com.myopicmobile.textwarrior.common.WriteThread;
+
+import java.io.File;
 
 public class TextEditor extends FreeScrollingTextField {
 	private Document _inputtingDoc;
@@ -108,6 +120,7 @@ public class TextEditor extends FreeScrollingTextField {
 		getColorScheme().setColor(ColorScheme.Colorable.COMMENT, color);
 	}
 
+	@Override
 	public void setBackgroundColor(int color) {
 		getColorScheme().setColor(ColorScheme.Colorable.BACKGROUND, color);
 	}

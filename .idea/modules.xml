@@ -2,10 +2,14 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MulCode.iml" filepath="$PROJECT_DIR$/MulCode.iml" />
+      <module fileurl="file://C:\AndroidStudioProjects\simpleC\MulCode.iml" filepath="C:\AndroidStudioProjects\simpleC\MulCode.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\AndroidStudioProjects\simpleC\app\app.iml" filepath="C:\AndroidStudioProjects\simpleC\app\app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/simpleC.iml" filepath="$PROJECT_DIR$/.idea/simpleC.iml" />
       <module fileurl="file://$PROJECT_DIR$/terminal-emulator-release/terminal-emulator-release.iml" filepath="$PROJECT_DIR$/terminal-emulator-release/terminal-emulator-release.iml" />
+      <module fileurl="file://C:\AndroidStudioProjects\simpleC\terminal-emulator-release\terminal-emulator-release.iml" filepath="C:\AndroidStudioProjects\simpleC\terminal-emulator-release\terminal-emulator-release.iml" />
       <module fileurl="file://$PROJECT_DIR$/terminal-view-release/terminal-view-release.iml" filepath="$PROJECT_DIR$/terminal-view-release/terminal-view-release.iml" />
+      <module fileurl="file://C:\AndroidStudioProjects\simpleC\terminal-view-release\terminal-view-release.iml" filepath="C:\AndroidStudioProjects\simpleC\terminal-view-release\terminal-view-release.iml" />
     </modules>
   </component>
 </project>

@@ -30,19 +30,20 @@ import java.util.List;
 /**
  * Created by zyw on 2017/11/12.
  */
-public class ConsoleActivity extends Activity implements ServiceConnection{
+public class ConsoleActivity extends Activity implements ServiceConnection {
 
     private Process process = null;
     private static final String TAG = "ConsoleActivity";
     public TerminalView mEmulatorView;
     private TerminalSession mSession;
-    private final  int MSG_SESSION_FINISH=0x100;
+    private final int MSG_SESSION_FINISH = 0x100;
 
     public TermuxService mTermService;
     private String cmd;
     private int mFontSize;
     private static int MIN_FONTSIZE;
     private static final int MAX_FONTSIZE = 256;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +53,7 @@ public class ConsoleActivity extends Activity implements ServiceConnection{
         startService();
     }
 
-    private void computeFontSize(){
+    private void computeFontSize() {
         //计算字体大小
         float dipInPixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, this.getResources().getDisplayMetrics());
         MIN_FONTSIZE = (int) (4f * dipInPixels);
@@ -64,23 +65,25 @@ public class ConsoleActivity extends Activity implements ServiceConnection{
         mFontSize = Math.max(MIN_FONTSIZE, Math.min(mFontSize, MAX_FONTSIZE));
 
     }
-    private  void initView(){
-        ActionBar actionBar=getActionBar();
-        if(actionBar!=null)
+
+    private void initView() {
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null)
             actionBar.setDisplayHomeAsUpEnabled(true);
-        mEmulatorView=(TerminalView) findViewById(R.id.emulatorView) ;
+        mEmulatorView = (TerminalView) findViewById(R.id.emulatorView);
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        cmd=getIntent().getStringExtra("bin");
+        cmd = getIntent().getStringExtra("bin");
         mEmulatorView.setTextSize(mFontSize);
         mEmulatorView.requestFocus();
         mEmulatorView.setOnKeyListener(new TermuxViewClient(this));
     }
-    private void  startService(){
+
+    private void startService() {
         Intent serviceIntent = new Intent(this, TermuxService.class);
         // Start the service and make it run regardless of who is bound to it:
         serviceIntent.setAction(TermuxService.ACTION_EXECUTE);
-        String uriStr =  "file:///"+cmd;
+        String uriStr = "file:///" + cmd;
         serviceIntent.setData(Uri.parse(uriStr));
         startService(serviceIntent);
         if (!bindService(serviceIntent, this, 0))
@@ -129,7 +132,7 @@ public class ConsoleActivity extends Activity implements ServiceConnection{
         }
 
         private boolean backkeyInterceptor(int keyCode, KeyEvent event) {
-            if (keyCode == KeyEvent.KEYCODE_BACK ) {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
                 //onKeyUp(keyCode, event);
 
                 return false;
@@ -138,6 +141,7 @@ public class ConsoleActivity extends Activity implements ServiceConnection{
             }
         }
     };
+
     void doPaste() {
         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clipData = clipboard.getPrimaryClip();
@@ -152,17 +156,16 @@ public class ConsoleActivity extends Activity implements ServiceConnection{
     }
 
     /**
-     *
      * Send a URL up to Android to be handled by a browser.
+     *
      * @param link The URL to be opened.
      */
-    private void execURL(String link)
-    {
+    private void execURL(String link) {
         Uri webLink = Uri.parse(link);
         Intent openLink = new Intent(Intent.ACTION_VIEW, webLink);
         PackageManager pm = getPackageManager();
         List<ResolveInfo> handlers = pm.queryIntentActivities(openLink, 0);
-        if(handlers.size() > 0)
+        if (handlers.size() > 0)
             startActivity(openLink);
     }
 
@@ -177,8 +180,7 @@ public class ConsoleActivity extends Activity implements ServiceConnection{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId()==android.R.id.home)
-        {
+        if (item.getItemId() == android.R.id.home) {
             finish();
         }
         return super.onOptionsItemSelected(item);
@@ -186,11 +188,12 @@ public class ConsoleActivity extends Activity implements ServiceConnection{
 
     private long startTime;
     private long endTime;
+
     @Override
     public void onServiceConnected(ComponentName componentName, IBinder service) {
         mTermService = ((TermuxService.LocalBinder) service).service;
         mEmulatorView.attachSession(mTermService.getTermSession());
-        startTime=System.currentTimeMillis();
+        startTime = System.currentTimeMillis();
         mTermService.mSessionChangeCallback = new TerminalSession.SessionChangedCallback() {
             @Override
             public void onTextChanged(TerminalSession changedSession) {
@@ -203,14 +206,14 @@ public class ConsoleActivity extends Activity implements ServiceConnection{
             }
 
             @Override
-            public void onSessionFinished(final TerminalSession finishedSession) {
-               // if (mTermService.mWantsToStop) {
-                    // The service wants to stop as soon as possible.
-                    endTime=System.currentTimeMillis();
-                    showToast("程序结束，耗时："+(endTime-startTime)/1000.0+"s");
-               //     finish();
-               //     return;
-              //  }
+            public void onSessionFinished(TerminalSession finishedSession) {
+                // if (mTermService.mWantsToStop) {
+                // The service wants to stop as soon as possible.
+                endTime = System.currentTimeMillis();
+                showToast("程序结束，耗时：" + (endTime - startTime) / 1000.0 + "s");
+                //     finish();
+                //     return;
+                //  }
 
             }
 
@@ -231,7 +234,7 @@ public class ConsoleActivity extends Activity implements ServiceConnection{
 
             }
         };
-    };
+    }
 
     @Override
     public void onServiceDisconnected(ComponentName componentName) {
@@ -245,14 +248,11 @@ public class ConsoleActivity extends Activity implements ServiceConnection{
     }
 
     private Toast toast;
-    private void showToast(CharSequence text)
-    {
-        if(toast==null)
-        {
-            toast=Toast.makeText(this,text,Toast.LENGTH_LONG);
-        }
-        else
-        {
+
+    private void showToast(CharSequence text) {
+        if (toast == null) {
+            toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
+        } else {
             toast.setText(text);
         }
         toast.show();

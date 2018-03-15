@@ -72,6 +72,7 @@ public class LanguageLua extends Language {
 		return (c=='.');
 	}
 	
+	@Override
 	public boolean isLineAStart(char c){
 		return false;
 	}
@@ -79,6 +80,7 @@ public class LanguageLua extends Language {
 	/**
 	 * Whether c0c1L is a token, where L is a sequence of characters until the end of the line
 	 */
+	@Override
 	public boolean isLineStart(char c0, char c1){
 		return (c0 == '-' && c1 == '-');
 	}

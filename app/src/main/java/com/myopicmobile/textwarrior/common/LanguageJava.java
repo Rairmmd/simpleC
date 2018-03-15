@@ -39,6 +39,7 @@ public class LanguageJava extends LanguageCFamily{
 	/**
 	 * Java has no preprocessors. Override base class implementation
 	 */
+	@Override
 	public boolean isLineAStart(char c){
 		return false;
 	}
